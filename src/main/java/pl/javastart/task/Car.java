@@ -18,9 +18,6 @@ public class Car extends Vehicle {
         double fuelConsumption = getAverageFuelConsumptionPer100Km();
         if (airConditioning) {
             fuelConsumption += ADDITIONAL_FUEL_CONSUMPTION_WITH_AIR_CONDITIONING_ON_PER_100KM;
-
-        } else {
-            return fuelConsumption;
         }
         return fuelConsumption;
     }
