@@ -1,6 +1,7 @@
 package pl.javastart.task;
 
 public class Car extends Vehicle {
+    public static final double ADDITIONAL_FUEL_CONSUMPTION_WITH_AIR_CONDITIONING_ON_PER_100KM = 0.8;
     private final boolean airConditioning;
 
     public boolean isAirConditioning() {
@@ -14,13 +15,12 @@ public class Car extends Vehicle {
 
     @Override
     public double fuelConsumption() {
-        double fuelConsumption;
-        double averageFuelConsumptionPer100Km = getAverageFuelConsumptionPer100Km();
+        double fuelConsumption = getAverageFuelConsumptionPer100Km();
         if (airConditioning) {
-            fuelConsumption = averageFuelConsumptionPer100Km + 0.8;
+            fuelConsumption += ADDITIONAL_FUEL_CONSUMPTION_WITH_AIR_CONDITIONING_ON_PER_100KM;
 
         } else {
-            fuelConsumption = averageFuelConsumptionPer100Km;
+            return fuelConsumption;
         }
         return fuelConsumption;
     }
@@ -29,12 +29,6 @@ public class Car extends Vehicle {
     public String toString() {
         return "Nazwa: " + getName() + ", pojemność baku: " + getTankCapacity() + "l , średnie spalanie: " + getAverageFuelConsumptionPer100Km()
                 + "l , klima: " + airConditioning;
-    }
-
-    @Override
-    public double range() {
-        double fuelConsumptionWithOrWithoutAirConditioning = fuelConsumption();
-        return getTankCapacity() / fuelConsumptionWithOrWithoutAirConditioning * 100;
     }
 }
 

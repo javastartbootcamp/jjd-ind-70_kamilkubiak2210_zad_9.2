@@ -24,7 +24,7 @@ public class Vehicle {
     }
 
     public double fuelConsumption() {
-        return 0;
+        return averageFuelConsumptionPer100Km;
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Vehicle {
     }
 
     public double range() {
-        return tankCapacity / averageFuelConsumptionPer100Km * 100;
+        return tankCapacity / fuelConsumption() * 100;
     }
 }

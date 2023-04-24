@@ -1,6 +1,9 @@
 package pl.javastart.task;
 
 public class Truck extends Car {
+    public static final int WEIGHT_TO_INCREASE_CONSUMPTION = 100;
+    public static final double ADDITIONAL_FUEL_CONSUMPTION_WITH_AIR_CONDITIONING_ON_PER_100KM = 0.5;
+    public static final double ADDITIONAL_FUEL_CONSUMPTION_WITH_LOAD_ON_PER_100KM = 1.6;
     private final int loadWeight;
 
     public Truck(String name, int tankCapacity, double averageFuelConsumptionPer100Km, boolean airConditioning, int loadWeight) {
@@ -10,39 +13,16 @@ public class Truck extends Car {
 
     @Override
     public double fuelConsumption() {
-        double fuelConsumption;
-        int weightToIncreaseConsumption = 100;
-        int counter = 0;
-        double averageFuelConsumptionPer100Km = getAverageFuelConsumptionPer100Km();
+        double fuelConsumption = getAverageFuelConsumptionPer100Km();
 
-        if (isAirConditioning() && loadWeight >= weightToIncreaseConsumption) {
-            while (loadWeight >= weightToIncreaseConsumption) {
-                counter++;
-                weightToIncreaseConsumption += 100;
-            }
-            fuelConsumption = averageFuelConsumptionPer100Km + 1.6 + (0.5 * counter);
-
-        } else if (isAirConditioning()) {
-            fuelConsumption = averageFuelConsumptionPer100Km + 1.6;
-
-        } else if (loadWeight >= weightToIncreaseConsumption) {
-            while (loadWeight >= weightToIncreaseConsumption) {
-                counter++;
-                weightToIncreaseConsumption += 100;
-
-            }
-            fuelConsumption = averageFuelConsumptionPer100Km + (0.5 * counter);
-
-        } else {
-            return averageFuelConsumptionPer100Km;
+        if (isAirConditioning()) {
+            fuelConsumption += ADDITIONAL_FUEL_CONSUMPTION_WITH_LOAD_ON_PER_100KM;
+        }
+        if (loadWeight >= WEIGHT_TO_INCREASE_CONSUMPTION) {
+            int i = loadWeight / WEIGHT_TO_INCREASE_CONSUMPTION;
+            fuelConsumption += i * ADDITIONAL_FUEL_CONSUMPTION_WITH_AIR_CONDITIONING_ON_PER_100KM;
         }
         return fuelConsumption;
-    }
-
-    @Override
-    public double range() {
-        double fuelConsumptionWithOrWithoutAirConditioning = fuelConsumption();
-        return getTankCapacity() / fuelConsumptionWithOrWithoutAirConditioning * 100;
     }
 
     @Override
